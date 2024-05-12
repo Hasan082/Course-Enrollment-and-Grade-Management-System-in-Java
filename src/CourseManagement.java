@@ -2,7 +2,10 @@ import java.util.ArrayList;
 
 public class CourseManagement {
     private static ArrayList<Course> courses = new ArrayList<>();
+
     private static ArrayList<StudentGrade> studentGrades = new ArrayList<>();
+
+    private static ArrayList<Student> students = new ArrayList<>();
 
     // Static method to add new course
     public static void addCourse(String courseCode, String courseName, int maxCapacity) {
@@ -49,4 +52,25 @@ public class CourseManagement {
         double overallGrade = totalGrade / totalCourses;
         System.out.println("Overall course grade for student " + student.getName() + ": " + overallGrade);
     }
+
+    public static Student getStudentById(long studentId) {
+        // Iterate through the list of students
+        for (Student student : students) {
+            if (student.getId() == studentId) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public static Course getCourseByCode(String courseCode) {
+        for (Course course : courses) {
+
+            if (course.getCourseCode().equals(courseCode)) {
+                return course;
+            }
+        }
+        return null;
+    }
+
 }

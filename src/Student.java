@@ -45,7 +45,7 @@ public class Student {
 
     // Implement a method to assign grades to students.
     public void assignGrade(Course course, int grade, Student student) {
-        if (course == null || student == null) {
+        if (course == null || grade < 0) {
             throw new IllegalArgumentException("Course and student cannot be null");
         }
 
