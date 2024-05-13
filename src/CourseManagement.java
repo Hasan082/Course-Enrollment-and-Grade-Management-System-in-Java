@@ -5,11 +5,13 @@ public class CourseManagement {
     private static ArrayList<Course> courses = new ArrayList<>();
     private static HashMap<String, Student> students = new HashMap<>();
 
+    // add course
     public void addCourse(String courseCode, String courseName, int maxCapacity) {
         Course newCourse = new Course(courseCode, courseName, maxCapacity);
         courses.add(newCourse);
     }
 
+    // enroll student
     public void enrollStudent(String studentName, String studentID, String courseCode) {
         Course course = findCourse(courseCode);
         if (course == null) {
@@ -28,6 +30,7 @@ public class CourseManagement {
         Course.incrementTotalEnrolledStudents();
     }
 
+    // assign grade
     public void assignGrade(String studentID, String courseCode, int grade) {
         Course course = findCourse(courseCode);
         if (course == null) {
@@ -46,6 +49,7 @@ public class CourseManagement {
         student.assignGrade(course, grade);
     }
 
+    // calculate overall grade
     public void calculateOverallGrade(String studentID) {
         Student student = students.get(studentID);
         if (student == null) {
@@ -73,6 +77,7 @@ public class CourseManagement {
         System.out.println("Overall grade for student " + studentID + ": " + overallGrade);
     }
 
+    // find course
     private static Course findCourse(String courseCode) {
         for (Course course : courses) {
             if (course.getCourseCode().equals(courseCode)) {

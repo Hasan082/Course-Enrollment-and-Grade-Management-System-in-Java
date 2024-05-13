@@ -14,7 +14,7 @@ To use the Course Enrollment and Grade Management System:
 1. Ensure you have Java installed on your system.
 2. Clone or download the project repository from [GitHub link].
 3. Compile the Java files using your preferred IDE or command-line compiler.
-4. Run the application and follow the prompts in the command-line interface to perform actions such as adding new courses, enrolling students, assigning grades, and calculating overall course grades.
+4. Run the application and follow the prompts in the command-line interface to perform actions such as adding new courses, enrolling students, assigning grades, and calculating overall course grades.(Documentation provided)
 
 ### Error Handling:
 The system incorporates error handling mechanisms to handle invalid inputs and edge cases gracefully. For example:

@@ -5,8 +5,9 @@ public class Student {
     private String name;
     private String ID;
     private ArrayList<Course> enrolledCourses;
-    private HashMap<Course, Integer> grades; // Course -> Grade
+    private HashMap<Course, Integer> grades;
 
+    // Parameterized Constructor
     public Student(String name, String ID) {
         this.name = name;
         this.ID = ID;
@@ -15,6 +16,7 @@ public class Student {
     }
 
     // Getter and setter methods
+
     public String getName() {
         return name;
     }
@@ -36,6 +38,6 @@ public class Student {
     }
 
     public int getGrade(Course course) {
-        return grades.getOrDefault(course, -1); // Assuming -1 for course not graded yet
+        return grades.getOrDefault(course, -1);
     }
 }

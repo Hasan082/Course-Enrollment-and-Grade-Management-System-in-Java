@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 public class AdministratorInterface {
     private static Scanner scanner = new Scanner(System.in);
 
+    // get user choice
     private static int getUserChoice() {
         int choice = -1;
 
@@ -22,6 +23,7 @@ public class AdministratorInterface {
         return choice;
     }
 
+    // get integer input
     private static int getIntInput(String prompt) {
         int value = -1; // Default value
 
@@ -40,6 +42,7 @@ public class AdministratorInterface {
         return value;
     }
 
+    // main
     public static void main(String[] args) {
         CourseManagement courseManagement = new CourseManagement();
 
@@ -69,6 +72,7 @@ public class AdministratorInterface {
         }
     }
 
+    // display menu
     private static void displayMenu() {
         try {
             System.out.println("Administrator Interface Menu:");
@@ -86,6 +90,7 @@ public class AdministratorInterface {
 
     }
 
+    // add new course
     private static void addNewCourse(CourseManagement courseManagement) {
         try {
             System.out.print("Enter course code: ");
@@ -104,6 +109,7 @@ public class AdministratorInterface {
 
     }
 
+    // enroll student
     private static void enrollStudent(CourseManagement courseManagement) {
         try {
             System.out.print("Enter student name: ");
@@ -123,6 +129,7 @@ public class AdministratorInterface {
 
     }
 
+    // assign grade
     private static void assignGrade(CourseManagement courseManagement) {
         try {
             System.out.print("Enter student ID: ");
@@ -140,6 +147,7 @@ public class AdministratorInterface {
         }
     }
 
+    // calculate overall grades
     private static void calculateOverallGrades(CourseManagement courseManagement) {
         try {
             System.out.print("Enter student ID: ");

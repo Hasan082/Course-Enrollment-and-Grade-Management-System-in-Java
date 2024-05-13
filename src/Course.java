@@ -8,6 +8,7 @@ public class Course {
     private static int totalEnrolledStudents = 0;
     private ArrayList<Student> enrolledStudents;
 
+    // Parameterized Constructor
     public Course(String courseCode, String name, int maxCapacity) {
         this.courseCode = courseCode;
         this.name = name;
