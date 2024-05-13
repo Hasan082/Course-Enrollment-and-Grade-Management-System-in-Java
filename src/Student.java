@@ -1,61 +1,41 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
-//Student class
 public class Student {
-    private long id;
     private String name;
+    private String ID;
     private ArrayList<Course> enrolledCourses;
+    private HashMap<Course, Integer> grades; // Course -> Grade
 
-    // default constructor
-    public Student() {
-
-    }
-
-    // parameterized constructor
-    public Student(long id, String name, ArrayList<Course> enrolledCourses) {
-        this.id = id;
+    public Student(String name, String ID) {
         this.name = name;
-        this.enrolledCourses = enrolledCourses;
-    }
-    // getters and setters
-
-    public long getId() {
-        return id;
+        this.ID = ID;
+        this.enrolledCourses = new ArrayList<>();
+        this.grades = new HashMap<>();
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    // Getter and setter methods
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getID() {
+        return ID;
     }
 
     public ArrayList<Course> getEnrolledCourses() {
         return enrolledCourses;
     }
 
-    public void setEnrolledCourses(ArrayList<Course> enrolledCourses) {
-        this.enrolledCourses = enrolledCourses;
+    public void enrollCourse(Course course) {
+        enrolledCourses.add(course);
     }
 
-    // Implement a method to assign grades to students.
-    public void assignGrade(Course course, int grade, Student student) {
-        if (course == null || grade < 0) {
-            throw new IllegalArgumentException("Course and student cannot be null");
-        }
-
-        if (!enrolledCourses.contains(course)) {
-            throw new IllegalArgumentException(
-                    "Student is not enrolled in the specified course: " + course.getCourseName());
-        }
-
-        course.setGrade(student, grade);
-        System.out.println("Grade assigned successfully for course: " + course.getCourseName());
+    public void assignGrade(Course course, int grade) {
+        grades.put(course, grade);
     }
 
+    public int getGrade(Course course) {
+        return grades.getOrDefault(course, -1); // Assuming -1 for course not graded yet
+    }
 }

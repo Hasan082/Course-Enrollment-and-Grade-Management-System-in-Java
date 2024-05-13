@@ -1,131 +1,156 @@
-import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class AdministratorInterface {
-    private static final Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
+
+    private static int getUserChoice() {
+        int choice = -1;
+
+        while (true) {
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+                break;
+            } else {
+                System.err.print("Error: Please enter a valid integer. Enter the choice again: ");
+                scanner.nextLine();
+            }
+        }
+
+        return choice;
+    }
+
+    private static int getIntInput(String prompt) {
+        int value = -1; // Default value
+
+        while (true) {
+            try {
+                System.out.print(prompt);
+                value = scanner.nextInt();
+                scanner.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.err.println("Error: Please enter a valid integer.");
+                scanner.nextLine();
+            }
+        }
+
+        return value;
+    }
 
     public static void main(String[] args) {
+        CourseManagement courseManagement = new CourseManagement();
+
         boolean exit = false;
         while (!exit) {
             displayMenu();
             int choice = getUserChoice();
             switch (choice) {
                 case 1:
-                    addNewCourse(scanner);
+                    addNewCourse(courseManagement);
                     break;
                 case 2:
-                    enrollStudent(scanner);
+                    enrollStudent(courseManagement);
                     break;
                 case 3:
-                    assignGrade(scanner);
+                    assignGrade(courseManagement);
                     break;
                 case 4:
-                    calculateOverallGrade();
+                    calculateOverallGrades(courseManagement);
                     break;
                 case 5:
                     exit = true;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 1 and 5.");
+                    System.out.println("Invalid choice. Please try again.");
             }
         }
     }
 
     private static void displayMenu() {
-        System.out.println("\n===== Administrator Menu =====");
-        System.out.println("1. Add a new course");
-        System.out.println("2. Enroll a student");
-        System.out.println("3. Assign a grade");
-        System.out.println("4. Calculate overall course grade for a student");
-        System.out.println("5. Exit");
-        System.out.print("√ Enter your choice: ");
-    }
-
-    private static int getUserChoice() {
-        int choice = -1;
-        while (choice < 1 || choice > 5) {
-            try {
-                choice = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
-            }
+        try {
+            System.out.println("Administrator Interface Menu:");
+            System.out.println("1. Add a new course");
+            System.out.println("2. Enroll a student in a course");
+            System.out.println("3. Assign a grade to a student");
+            System.out.println("4. Calculate overall course grades for a student");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+        } catch (Exception e) {
+            System.out.println("Error: Invalid input. Please try again.");
+            scanner.nextLine();
+            Logger.getLogger("displayMenu Error: " + e.getMessage());
         }
-        return choice;
+
     }
 
-    private static void addNewCourse(Scanner scanner) {
-        System.out.println("\n===== Add New Course =====");
+    private static void addNewCourse(CourseManagement courseManagement) {
+        try {
+            System.out.print("Enter course code: ");
+            String courseCode = scanner.nextLine();
+            System.out.print("Enter course name: ");
+            String courseName = scanner.nextLine();
+            int maxCapacity = getIntInput("Enter maximum capacity: ");
 
-        System.out.print("Enter course code: ");
-        String courseCode = scanner.nextLine();
+            courseManagement.addCourse(courseCode, courseName, maxCapacity);
+            System.out.println("Course added successfully with code " + courseCode);
+        } catch (Exception e) {
+            System.out.println("Error: Invalid input. Please try again.");
+            scanner.nextLine();
+            Logger.getLogger("addNewCourse Error: " + e.getMessage());
+        }
 
-        System.out.print("Enter course name: ");
-        String courseName = scanner.nextLine();
-
-        System.out.print("Enter maximum capacity: ");
-        int maxCapacity = Integer.parseInt(scanner.nextLine());
-
-        CourseManagement.addCourse(courseCode, courseName, maxCapacity);
-        System.out.println("Course added successfully!");
     }
 
-    private static void enrollStudent(Scanner scanner) {
-        System.out.print("Enter student ID:");
-        long studentId = scanner.nextLong();
-        scanner.nextLine(); // Consume newline character
+    private static void enrollStudent(CourseManagement courseManagement) {
+        try {
+            System.out.print("Enter student name: ");
+            String studentName = scanner.nextLine();
+            System.out.print("Enter student ID: ");
+            String studentID = scanner.nextLine();
+            System.out.print("Enter course code to enroll in: ");
+            String courseCode = scanner.nextLine();
 
-        System.out.print("Enter student name:");
-        String studentName = scanner.nextLine();
+            courseManagement.enrollStudent(studentName, studentID, courseCode);
+            System.out.println("Student enrolled successfully with ID " + studentID + " in course " + courseCode);
+        } catch (Exception e) {
+            System.out.println("Error: Invalid input. Please try again.");
+            scanner.nextLine();
+            Logger.getLogger("enrollStudent Error: " + e.getMessage());
+        }
 
-        System.out.print("Enter course code:");
-        String courseCode = scanner.nextLine();
-
-        System.out.print("Enter course name:");
-        String courseName = scanner.nextLine();
-
-        System.out.print("Enter maximum capacity of the course:");
-        int maxCapacity = scanner.nextInt();
-
-        // Create Student and Course objects
-        Student student = new Student(studentId, studentName, new ArrayList<>());
-        Course course = new Course(courseCode, courseName, maxCapacity);
-
-        // Enroll student in course
-        CourseManagement.enrollStudent(student, course);
-
-        System.out.println("Student enrolled successfully in the course.");
     }
 
-    private static void assignGrade(Scanner scanner) {
-        System.out.println("Enter student ID:");
-        long studentId = scanner.nextLong();
-        scanner.nextLine(); // Consume newline character
+    private static void assignGrade(CourseManagement courseManagement) {
+        try {
+            System.out.print("Enter student ID: ");
+            String studentID = scanner.nextLine();
+            System.out.print("Enter course code: ");
+            String courseCode = scanner.nextLine();
+            int grade = getIntInput("Enter grade: ");
 
-        System.out.println("Enter course code:");
-        String courseCode = scanner.nextLine();
+            courseManagement.assignGrade(studentID, courseCode, grade);
 
-        System.out.println("Enter grade:");
-        int grade = scanner.nextInt();
-
-        // Retrieve the student from the list of enrolled students
-        Student student = CourseManagement.getStudentById(studentId);
-
-        // Retrieve the course from the list of courses
-        Course course = CourseManagement.getCourseByCode(courseCode);
-
-        // Check if both student and course are found
-        if (student != null && course != null) {
-            // Assign grade to student for the course
-            student.assignGrade(course, grade, student);
-            System.out.println("Grade assigned successfully.");
-        } else {
-            System.out.println("Student or course not found.");
+        } catch (Exception e) {
+            System.out.println("Error: Invalid input. Please try again.");
+            scanner.nextLine();
+            Logger.getLogger("assignGrade Error: " + e.getMessage());
         }
     }
 
-    // ToDo: Need to implement this
-    private static void calculateOverallGrade() {
-        // Implement logic to prompt for student information and call
-        // CourseManagement.calculateOverallGrade() method
+    private static void calculateOverallGrades(CourseManagement courseManagement) {
+        try {
+            System.out.print("Enter student ID: ");
+            String studentID = scanner.nextLine();
+
+            courseManagement.calculateOverallGrade(studentID);
+        } catch (Exception e) {
+            System.out.println("Error: Invalid input. Please try again.");
+            scanner.nextLine();
+            Logger.getLogger("calculateOverallGrades Error: " + e.getMessage());
+        }
+
     }
 }
