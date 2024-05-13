@@ -40,7 +40,8 @@ CourseEnrollmentAndGradeManagementSystem/
 │   ├── Course.java                   # Course class
 │   ├── Student.java                  # Student class
 │   ├── AdministratorInterface.java   # AdministratorInterface(Main class)  Entry point
-│
+├── Documentation/                    # INSTRUCTION directory
+│   ├── INSTRUCTION.MD                # INSTRUCTION FILE
 ├── README.md                         # Project README file
 │
 └── .gitignore                        # Git ignore file
